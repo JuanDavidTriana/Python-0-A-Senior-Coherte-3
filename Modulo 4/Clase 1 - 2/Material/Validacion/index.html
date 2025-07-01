@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validación y Organización del Flujo de Archivos - Clase 1 - 2</title>
+    <link rel="stylesheet" href="../styles/navbar.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            min-height: 100vh;
+            background-attachment: fixed;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 4rem;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            font-weight: 700;
+            letter-spacing: -1px;
+        }
+
+        .header p {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        .content-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .content-section h2 {
+            color: #6f42c1;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .content-section h3 {
+            color: #6f42c1;
+            font-size: 1.8rem;
+            margin: 2rem 0 1rem 0;
+            font-weight: 600;
+        }
+
+        .content-section p {
+            color: #555;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+
+        .content-section ul {
+            margin: 1.5rem 0;
+            padding-left: 2rem;
+        }
+
+        .content-section li {
+            color: #555;
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .code-block {
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            overflow-x: auto;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            border: 1px solid #2d3748;
+        }
+
+        .code-block pre {
+            margin: 0;
+            padding: 0;
+        }
+
+        .code-block code {
+            color: #e2e8f0;
+        }
+
+        /* Colores de sintaxis */
+        .code-keyword {
+            color: #ff6b6b;
+            font-weight: bold;
+        }
+
+        .code-string {
+            color: #51cf66;
+        }
+
+        .code-comment {
+            color: #868e96;
+            font-style: italic;
+        }
+
+        .code-function {
+            color: #74c0fc;
+        }
+
+        .code-class {
+            color: #ffd43b;
+            font-weight: bold;
+        }
+
+        .code-number {
+            color: #fcc419;
+        }
+
+        .code-operator {
+            color: #ff922b;
+        }
+
+        .code-attribute {
+            color: #da77f2;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            box-shadow: 0 8px 25px rgba(111, 66, 193, 0.3);
+        }
+
+        .highlight-box h3 {
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .highlight-box ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .highlight-box li {
+            color: white;
+            margin-bottom: 0.8rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .highlight-box li::before {
+            content: '▶';
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        .next-section {
+            text-align: center;
+            margin-top: 6rem;
+            margin-bottom: 4rem;
+            padding: 3.5rem 3.5rem 2.8rem 3.5rem;
+            background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);
+            border-radius: 32px;
+            box-shadow: 0 8px 32px rgba(111, 66, 193, 0.18);
+            max-width: 950px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .next-section h2 {
+            font-size: 2.3rem;
+            color: #2d1e4a;
+            font-weight: 800;
+            margin-bottom: 1.2rem;
+            text-shadow: 0 2px 8px rgba(111,66,193,0.10);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.7rem;
+        }
+        .next-section p {
+            font-size: 1.25rem;
+            color: #2d1e4a;
+            margin-bottom: 2.5rem;
+            font-weight: 500;
+        }
+        .next-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.7rem;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            padding: 1.3rem 3.5rem;
+            border-radius: 2.5rem;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.35rem;
+            box-shadow: 0 6px 24px rgba(111, 66, 193, 0.18);
+            transition: all 0.2s cubic-bezier(.4,2,.6,1);
+            border: none;
+        }
+        .next-link:hover {
+            background: linear-gradient(90deg, #764ba2 0%, #667eea 100%);
+            transform: translateY(-3px) scale(1.04);
+            box-shadow: 0 12px 32px rgba(111, 66, 193, 0.25);
+        }
+        .next-link .emoji {
+            font-size: 1.7em;
+            margin-right: 0.3em;
+        }
+        @media (max-width: 768px) {
+            .next-section {
+                padding: 2rem 0.5rem 1.5rem 0.5rem;
+                max-width: 98vw;
+            }
+            .next-section h2 {
+                font-size: 1.3rem;
+            }
+            .next-link {
+                font-size: 1rem;
+                padding: 1rem 1.5rem;
+            }
+        }
+        .footer {
+            text-align: center;
+            margin-top: 4rem;
+            color: white;
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="../../index.html" class="navbar-brand">Python 0 a Senior</a>
+            <div class="navbar-links">
+                <a href="../index.html" class="nav-link">🏠 Inicio</a>
+                <a href="../index.html" class="nav-link">📁 Archivos</a>
+                <a href="../Archivos/index.html" class="nav-link">📝 Texto Plano</a>
+                <a href="index.html" class="nav-link active">🔍 Validación</a>
+                <a href="../Proyecto/index.html" class="nav-link">💪 Proyecto</a>
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="container">
+        <div class="header">
+            <h1>🔍 Validación y Organización del Flujo de Archivos</h1>
+            <p>Refuerza la lógica de escritura/lectura segura y organiza el código con IA para hacerlo más profesional.</p>
+        </div>
+
+        <div class="content-section">
+            <h2>🔍 ¿Qué es la Validación de Datos?</h2>
+            <p>La <b>validación de datos</b> es el proceso de verificar que la información que se va a escribir en un archivo sea correcta, completa y segura antes de realizar las operaciones de entrada/salida. Es fundamental para garantizar la integridad de los datos.</p>
+            <div class="highlight-box">
+                <h3>🌟 Importancia de la Validación</h3>
+                <ul>
+                    <li>Previene errores y corrupción de datos</li>
+                    <li>Garantiza la integridad de la información</li>
+                    <li>Mejora la seguridad del sistema</li>
+                    <li>Facilita el debugging y mantenimiento</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>✅ Validación de Datos Antes de Escribir</h2>
+            <p>Antes de escribir datos en un archivo, es fundamental validar que la información sea correcta y segura. Esto incluye verificar tipos de datos, rangos válidos y formato correcto:</p>
+            <div class="code-block">
+<pre><code><span class="code-keyword">def</span> <span class="code-function">validar_datos_usuario</span>(nombre, edad, email):
+    <span class="code-string">"""Valida los datos de un usuario antes de escribir en archivo"""</span>
+    errores = []
+    
+    <span class="code-comment"># Validar nombre</span>
+    <span class="code-keyword">if</span> <span class="code-keyword">not</span> nombre <span class="code-keyword">or</span> <span class="code-keyword">not</span> nombre.<span class="code-function">strip</span>():
+        errores.<span class="code-function">append</span>(<span class="code-string">"El nombre no puede estar vacío"</span>)
+    <span class="code-keyword">elif</span> <span class="code-function">len</span>(nombre) > <span class="code-number">50</span>:
+        errores.<span class="code-function">append</span>(<span class="code-string">"El nombre es demasiado largo"</span>)
+    
+    <span class="code-comment"># Validar edad</span>
+    <span class="code-keyword">try</span>:
+        edad_int = <span class="code-function">int</span>(edad)
+        <span class="code-keyword">if</span> edad_int < <span class="code-number">0</span> <span class="code-keyword">or</span> edad_int > <span class="code-number">120</span>:
+            errores.<span class="code-function">append</span>(<span class="code-string">"La edad debe estar entre 0 y 120"</span>)
+    <span class="code-keyword">except</span> ValueError:
+        errores.<span class="code-function">append</span>(<span class="code-string">"La edad debe ser un número válido"</span>)
+    
+    <span class="code-comment"># Validar email</span>
+    <span class="code-keyword">if</span> <span class="code-string">'@'</span> <span class="code-keyword">not</span> <span class="code-keyword">in</span> email <span class="code-keyword">or</span> <span class="code-string">'.'</span> <span class="code-keyword">not</span> <span class="code-keyword">in</span> email:
+        errores.<span class="code-function">append</span>(<span class="code-string">"El email no tiene un formato válido"</span>)
+    
+    <span class="code-keyword">return</span> errores
+
+<span class="code-comment"># Uso de la validación</span>
+datos_usuario = {
+    <span class="code-string">'nombre'</span>: <span class="code-string">'Juan Pérez'</span>,
+    <span class="code-string">'edad'</span>: <span class="code-string">'25'</span>,
+    <span class="code-string">'email'</span>: <span class="code-string">'juan@ejemplo.com'</span>
+}
+
+errores = <span class="code-function">validar_datos_usuario</span>(datos_usuario[<span class="code-string">'nombre'</span>], 
+                                    datos_usuario[<span class="code-string">'edad'</span>], 
+                                    datos_usuario[<span class="code-string">'email'</span>])
+
+<span class="code-keyword">if</span> <span class="code-keyword">not</span> errores:
+    <span class="code-comment"># Los datos son válidos, proceder a escribir</span>
+    <span class="code-keyword">with</span> <span class="code-function">open</span>(<span class="code-string">'usuarios.txt'</span>, <span class="code-string">'a'</span>) <span class="code-keyword">as</span> archivo:
+        archivo.<span class="code-function">write</span>(<span class="code-string">f"{datos_usuario['nombre']},{datos_usuario['edad']},{datos_usuario['email']}\n"</span>)
+<span class="code-keyword">else</span>:
+    <span class="code-function">print</span>(<span class="code-string">"Errores de validación:"</span>, errores)</code></pre>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>📁 Organización del Flujo de Archivos</h2>
+            <p>Organizar el flujo de archivos implica estructurar el código de manera que sea fácil de entender, mantener y extender. Esto incluye separar responsabilidades y crear funciones específicas:</p>
+            <div class="code-block">
+<pre><code><span class="code-keyword">class</span> <span class="code-class">GestorArchivos</span>:
+    <span class="code-keyword">def</span> <span class="code-function">__init__</span>(<span class="code-keyword">self</span>, ruta_archivo):
+        <span class="code-keyword">self</span>.<span class="code-attribute">ruta_archivo</span> = ruta_archivo
+        <span class="code-keyword">self</span>.<span class="code-attribute">backup_dir</span> = <span class="code-string">"backups"</span>
+    
+    <span class="code-keyword">def</span> <span class="code-function">crear_backup</span>(<span class="code-keyword">self</span>):
+        <span class="code-string">"""Crea un backup antes de modificar el archivo"""</span>
+        <span class="code-keyword">import</span> os
+        <span class="code-keyword">import</span> shutil
+        <span class="code-keyword">from</span> datetime <span class="code-keyword">import</span> datetime
+        
+        <span class="code-keyword">if</span> os.<span class="code-function">path.exists</span>(<span class="code-keyword">self</span>.<span class="code-attribute">ruta_archivo</span>):
+            <span class="code-keyword">if</span> <span class="code-keyword">not</span> os.<span class="code-function">path.exists</span>(<span class="code-keyword">self</span>.<span class="code-attribute">backup_dir</span>):
+                os.<span class="code-function">makedirs</span>(<span class="code-keyword">self</span>.<span class="code-attribute">backup_dir</span>)
+            
+            timestamp = datetime.<span class="code-function">now</span>().<span class="code-function">strftime</span>(<span class="code-string">"%Y%m%d_%H%M%S"</span>)
+            backup_ruta = os.<span class="code-function">path.join</span>(<span class="code-keyword">self</span>.<span class="code-attribute">backup_dir</span>, 
+                                    <span class="code-string">f"backup_{timestamp}.txt"</span>)
+            shutil.<span class="code-function">copy2</span>(<span class="code-keyword">self</span>.<span class="code-attribute">ruta_archivo</span>, backup_ruta)
+            <span class="code-keyword">return</span> backup_ruta
+        <span class="code-keyword">return</span> <span class="code-keyword">None</span>
+    
+    <span class="code-keyword">def</span> <span class="code-function">escribir_datos_validados</span>(<span class="code-keyword">self</span>, datos):
+        <span class="code-string">"""Escribe datos validados en el archivo"""</span>
+        <span class="code-keyword">if</span> <span class="code-keyword">not</span> datos:
+            <span class="code-keyword">raise</span> <span class="code-class">ValueError</span>(<span class="code-string">"No hay datos para escribir"</span>)
+        
+        <span class="code-comment"># Crear backup antes de escribir</span>
+        <span class="code-keyword">self</span>.<span class="code-function">crear_backup</span>()
+        
+        <span class="code-comment"># Escribir datos</span>
+        <span class="code-keyword">with</span> <span class="code-function">open</span>(<span class="code-keyword">self</span>.<span class="code-attribute">ruta_archivo</span>, <span class="code-string">'a'</span>, encoding=<span class="code-string">'utf-8'</span>) <span class="code-keyword">as</span> archivo:
+            <span class="code-keyword">for</span> dato <span class="code-keyword">in</span> datos:
+                archivo.<span class="code-function">write</span>(<span class="code-string">f"{dato}\n"</span>)
+        
+        <span class="code-function">print</span>(<span class="code-string">f"Datos escritos exitosamente en {self.ruta_archivo}"</span>)
+
+<span class="code-comment"># Uso del gestor organizado</span>
+gestor = <span class="code-class">GestorArchivos</span>(<span class="code-string">"datos_usuarios.txt"</span>)
+datos_validos = [<span class="code-string">"Juan,25,juan@email.com"</span>, <span class="code-string">"Ana,30,ana@email.com"</span>]
+gestor.<span class="code-function">escribir_datos_validados</span>(datos_validos)</code></pre>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>🤖 Refactorización con IA</h2>
+            <p>La IA puede ayudarte a refactorizar y mejorar el código de manejo de archivos, sugiriendo mejores prácticas y optimizaciones:</p>
+            <div class="code-block">
+<pre><code><span class="code-comment"># Prompt para IA: "Refactoriza este código de manejo de archivos"</span>
+<span class="code-keyword">import</span> logging
+<span class="code-keyword">from</span> typing <span class="code-keyword">import</span> List, Optional
+<span class="code-keyword">from</span> pathlib <span class="code-keyword">import</span> Path
+
+<span class="code-keyword">class</span> <span class="code-class">GestorArchivosAvanzado</span>:
+    <span class="code-string">"""Gestor avanzado de archivos con logging y manejo de errores"""</span>
+    
+    <span class="code-keyword">def</span> <span class="code-function">__init__</span>(<span class="code-keyword">self</span>, ruta_archivo: str, crear_backup: bool = <span class="code-keyword">True</span>):
+        <span class="code-keyword">self</span>.<span class="code-attribute">ruta_archivo</span> = Path(ruta_archivo)
+        <span class="code-keyword">self</span>.<span class="code-attribute">crear_backup</span> = crear_backup
+        <span class="code-keyword">self</span>.<span class="code-attribute">logger</span> = <span class="code-keyword">self</span>.<span class="code-function">_configurar_logging</span>()
+    
+    <span class="code-keyword">def</span> <span class="code-function">_configurar_logging</span>(<span class="code-keyword">self</span>) -> logging.Logger:
+        <span class="code-string">"""Configura el sistema de logging"""</span>
+        logger = logging.<span class="code-function">getLogger</span>(<span class="code-string">f"GestorArchivos_{self.ruta_archivo.stem}"</span>)
+        logger.<span class="code-function">setLevel</span>(logging.INFO)
+        
+        <span class="code-keyword">if</span> <span class="code-keyword">not</span> logger.<span class="code-attribute">handlers</span>:
+            handler = logging.<span class="code-function">FileHandler</span>(<span class="code-string">"archivos.log"</span>)
+            formatter = logging.<span class="code-function">Formatter</span>(<span class="code-string">'%(asctime)s - %(name)s - %(levelname)s - %(message)s'</span>)
+            handler.<span class="code-function">setFormatter</span>(formatter)
+            logger.<span class="code-function">addHandler</span>(handler)
+        
+        <span class="code-keyword">return</span> logger
+    
+    <span class="code-keyword">def</span> <span class="code-function">escribir_datos_seguro</span>(<span class="code-keyword">self</span>, datos: List[str]) -> bool:
+        <span class="code-string">"""Escribe datos de forma segura con validación y backup"""</span>
+        <span class="code-keyword">try</span>:
+            <span class="code-comment"># Validar datos</span>
+            <span class="code-keyword">if</span> <span class="code-keyword">not</span> <span class="code-keyword">self</span>.<span class="code-function">_validar_datos</span>(datos):
+                <span class="code-keyword">self</span>.<span class="code-attribute">logger</span>.<span class="code-function">error</span>(<span class="code-string">"Datos inválidos para escritura"</span>)
+                <span class="code-keyword">return</span> <span class="code-keyword">False</span>
+            
+            <span class="code-comment"># Crear backup si es necesario</span>
+            <span class="code-keyword">if</span> <span class="code-keyword">self</span>.<span class="code-attribute">crear_backup</span> <span class="code-keyword">and</span> <span class="code-keyword">self</span>.<span class="code-attribute">ruta_archivo</span>.<span class="code-function">exists</span>():
+                <span class="code-keyword">self</span>.<span class="code-function">_crear_backup</span>()
+            
+            <span class="code-comment"># Escribir datos</span>
+            <span class="code-keyword">with</span> <span class="code-keyword">self</span>.<span class="code-attribute">ruta_archivo</span>.<span class="code-function">open</span>(<span class="code-string">'a'</span>, encoding=<span class="code-string">'utf-8'</span>) <span class="code-keyword">as</span> archivo:
+                <span class="code-keyword">for</span> dato <span class="code-keyword">in</span> datos:
+                    archivo.<span class="code-function">write</span>(<span class="code-string">f"{dato}\n"</span>)
+            
+            <span class="code-keyword">self</span>.<span class="code-attribute">logger</span>.<span class="code-function">info</span>(<span class="code-string">f"Datos escritos exitosamente en {self.ruta_archivo}"</span>)
+            <span class="code-keyword">return</span> <span class="code-keyword">True</span>
+            
+        <span class="code-keyword">except</span> Exception <span class="code-keyword">as</span> e:
+            <span class="code-keyword">self</span>.<span class="code-attribute">logger</span>.<span class="code-function">error</span>(<span class="code-string">f"Error al escribir datos: {e}"</span>)
+            <span class="code-keyword">return</span> <span class="code-keyword">False</span>
+
+<span class="code-comment"># Uso del gestor refactorizado</span>
+gestor = <span class="code-class">GestorArchivosAvanzado</span>(<span class="code-string">"usuarios.txt"</span>)
+datos = [<span class="code-string">"María,28,maria@email.com"</span>, <span class="code-string">"Carlos,35,carlos@email.com"</span>]
+exito = gestor.<span class="code-function">escribir_datos_seguro</span>(datos)</code></pre>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>✅ Buenas Prácticas y Ventajas</h2>
+            <ul>
+                <li>Usa valores por defecto para mayor flexibilidad</li>
+                <li>Valida los datos en el constructor</li>
+                <li>Documenta los parámetros del constructor</li>
+                <li>Evita lógica compleja dentro del <code>__init__</code></li>
+            </ul>
+        </div>
+
+        <div class="content-section">
+            <h2>🤖 Uso de IA para Generar Constructores</h2>
+            <p>Las herramientas de IA pueden ayudarte a generar constructores automáticamente, sugerir validaciones y documentar los parámetros.</p>
+            <div class="highlight-box">
+                <h3>🌟 Ejemplo de Prompt para IA</h3>
+                <ul>
+                    <li>"Genera un constructor para una clase Empleado con nombre, puesto y salario."</li>
+                    <li>"Sugiere validaciones para el constructor de mi clase Producto."</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>🚀 Proyecto Integrador</h2>
+            <p>Desarrolla un sistema que permita registrar usuarios en un archivo de texto plano, validando los datos antes de almacenarlos. El sistema debe:
+            <ul>
+                <li>Solicitar nombre, edad y email al usuario</li>
+                <li>Validar los datos (nombre no vacío, edad válida, email con formato correcto)</li>
+                <li>Guardar los datos en un archivo solo si son válidos</li>
+                <li>Crear un backup automático antes de cada escritura</li>
+                <li>Mostrar mensajes claros de error y éxito</li>
+            </ul>
+            <p>¡Este proyecto te ayudará a consolidar todo lo aprendido sobre archivos y validación!</p>
+        </div>
+
+        <div class="next-section">
+            <h2><span class="emoji">🚀</span>¿Listo para Continuar?</h2>
+            <p>¡Excelente! Ahora dominas la validación y organización de archivos.<br>En la siguiente sección podrás trabajar en el proyecto final.</p>
+            <a href="../Proyecto/index.html" class="next-link"><span class="emoji">🏢</span>Ir al Proyecto Final →</a>
+        </div>
+
+        <div class="footer">
+            <p>&copy; 2024 Python 0 a Senior - Cohorte 4. Todos los derechos reservados.</p>
+        </div>
+    </div>
+</body>
+</html> 

@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 7 - 8: Funciones - Python 0 a Senior</title>
+    <link rel="stylesheet" href="styles/navbar.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            min-height: 100vh;
+            background-attachment: fixed;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 4rem;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            font-weight: 700;
+            letter-spacing: -1px;
+        }
+
+        .header p {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        .module-description {
+            text-align: center;
+            margin-bottom: 4rem;
+            color: white;
+            font-size: 1.25rem;
+            opacity: 0.95;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.7;
+        }
+
+        .topics-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 3rem;
+            margin-bottom: 4rem;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .topic-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-decoration: none;
+            color: inherit;
+            position: relative;
+            overflow: hidden;
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .topic-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+        }
+
+        .topic-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+        }
+
+        .topic-card h2 {
+            color: #6f42c1;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-weight: 600;
+        }
+
+        .topic-card p {
+            color: #555;
+            margin-bottom: 2rem;
+            line-height: 1.7;
+            font-size: 1.1rem;
+        }
+
+        .topic-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .topic-features li {
+            padding: 0.7rem 0;
+            color: #555;
+            position: relative;
+            padding-left: 2rem;
+            font-size: 1.05rem;
+        }
+
+        .topic-features li::before {
+            content: '▶';
+            color: #6f42c1;
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .topic-link {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(111, 66, 193, 0.3);
+            font-size: 1.1rem;
+        }
+
+        .topic-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(111, 66, 193, 0.4);
+        }
+
+        .project-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 3rem;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            margin-top: 3rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .project-section h2 {
+            color: #6f42c1;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            font-weight: 600;
+        }
+
+        .project-section p {
+            color: #666;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .project-link {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(111, 66, 193, 0.3);
+            font-size: 1.1rem;
+        }
+
+        .project-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(111, 66, 193, 0.4);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 4rem;
+            color: white;
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .topics-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                max-width: 100%;
+            }
+
+            .topic-card {
+                padding: 2rem;
+                min-height: auto;
+            }
+
+            .project-section {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="../../index.html" class="navbar-brand">
+                🐍 Python 0 a Senior
+            </a>
+            <div class="navbar-links">
+                <a href="../../index.html" class="nav-link back-to-module">← Volver al Módulo 1</a>
+                <a href="index.html" class="nav-link active">Inicio</a>
+                <a href="Funciones/index.html" class="nav-link">Funciones</a>
+                <a href="Ejercicios/index.html" class="nav-link">Ejercicios</a>
+                <a href="Proyecto/index.html" class="nav-link">Proyecto</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="header">
+            <h1>🔧 Clase 7 - 8</h1>
+            <p><strong>Funciones y Proyectos:</strong> Programación Modular</p>
+            <p>Domina la Reutilización de Código y Desarrolla Proyectos Complejos</p>
+        </div>
+
+        <div class="module-description">
+            <p>En estas clases aprenderás a crear funciones reutilizables, trabajar con estructuras de datos avanzadas y desarrollar proyectos completos. Las funciones son la base de la programación modular y te permitirán crear código más organizado y eficiente.</p>
+        </div>
+
+        <div class="topics-grid">
+            <a href="Funciones/index.html" class="topic-card">
+                <h2>🔧 Funciones en Python</h2>
+                <p>Aprende a crear y usar funciones para organizar y reutilizar tu código de manera eficiente.</p>
+                <ul class="topic-features">
+                    <li>Definición y creación de funciones</li>
+                    <li>Parámetros y argumentos</li>
+                    <li>Retorno de valores</li>
+                    <li>Funciones con valores por defecto</li>
+                    <li>Funciones lambda</li>
+                </ul>
+                <span class="topic-link">Comenzar</span>
+            </a>
+
+            <a href="Ejercicios/index.html" class="topic-card">
+                <h2>💪 Ejercicios Prácticos</h2>
+                <p>Pon en práctica todo lo aprendido sobre funciones con ejercicios guiados y desafíos.</p>
+                <ul class="topic-features">
+                    <li>Ejercicios de funciones básicas</li>
+                    <li>Problemas de lógica</li>
+                    <li>Manipulación de datos</li>
+                    <li>Desafíos de programación</li>
+                    <li>Soluciones paso a paso</li>
+                </ul>
+                <span class="topic-link">Practicar</span>
+            </a>
+
+            <div class="topic-card">
+                <h2>📊 Estructuras de Datos</h2>
+                <p>Explora listas, diccionarios y otras estructuras de datos para manejar información compleja.</p>
+                <ul class="topic-features">
+                    <li>Listas y operaciones</li>
+                    <li>Diccionarios y métodos</li>
+                    <li>Tuplas y conjuntos</li>
+                    <li>Comprensión de listas</li>
+                    <li>Manejo de datos complejos</li>
+                </ul>
+                <span class="topic-link" style="background: linear-gradient(135deg, #ff6b6b, #ee5a24);">Próximamente</span>
+            </div>
+
+            <div class="topic-card">
+                <h2>💻 Próximos Pasos</h2>
+                <p>Una vez que domines las funciones, estarás listo para programación orientada a objetos y proyectos avanzados.</p>
+                <ul class="topic-features">
+                    <li>Programación orientada a objetos</li>
+                    <li>Manejo de archivos</li>
+                    <li>APIs y web scraping</li>
+                    <li>Bases de datos</li>
+                    <li>Frameworks web</li>
+                </ul>
+                <span class="topic-link" style="background: linear-gradient(135deg, #ff6b6b, #ee5a24);">Próximamente</span>
+            </div>
+        </div>
+
+        <div class="project-section">
+            <h2>🚀 Proyecto Final: Sistema de Biblioteca</h2>
+            <p>Desarrolla un sistema completo de gestión de biblioteca que integre todas las habilidades aprendidas: funciones, estructuras de datos, bucles y condicionales.</p>
+            <a href="Proyecto/index.html" class="project-link">Ver Proyecto</a>
+        </div>
+
+        <div class="footer">
+            <p>&copy; 2024 Python 0 a Senior - Cohorte 4. Todos los derechos reservados.</p>
+        </div>
+    </div>
+</body>
+</html>

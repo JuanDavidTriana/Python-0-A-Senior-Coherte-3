@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python 0 a Senior - Cohorte 3</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            min-height: 100vh;
+            background-attachment: fixed;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 4rem;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            font-weight: 700;
+            letter-spacing: -1px;
+        }
+
+        .header p {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        .module-description {
+            text-align: center;
+            margin-bottom: 4rem;
+            color: white;
+            font-size: 1.25rem;
+            opacity: 0.95;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.7;
+        }
+
+        .classes-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-bottom: 4rem;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .class-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-decoration: none;
+            color: inherit;
+            position: relative;
+            overflow: hidden;
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .class-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+        }
+
+        .class-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+        }
+
+        .class-card h2 {
+            color: #6f42c1;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-weight: 600;
+        }
+
+        .class-card p {
+            color: #555;
+            margin-bottom: 2rem;
+            line-height: 1.7;
+            font-size: 1rem;
+        }
+
+        .class-topics {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .class-topics li {
+            padding: 0.5rem 0;
+            color: #555;
+            position: relative;
+            padding-left: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .class-topics li::before {
+            content: '▶';
+            color: #6f42c1;
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+
+        .class-link {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(111, 66, 193, 0.3);
+            font-size: 1rem;
+        }
+
+        .class-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(111, 66, 193, 0.4);
+        }
+
+        .teacher-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 3rem;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            margin-top: 3rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .teacher-section h2 {
+            color: #6f42c1;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            font-weight: 600;
+        }
+
+        .teacher-section p {
+            color: #666;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .teacher-link {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(111, 66, 193, 0.3);
+            font-size: 1.1rem;
+        }
+
+        .teacher-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(111, 66, 193, 0.4);
+        }
+
+        .repository-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 3rem;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            margin-top: 3rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .repository-section h2 {
+            color: #6f42c1;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            font-weight: 600;
+        }
+
+        .repository-section p {
+            color: #666;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .repository-link {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(111, 66, 193, 0.3);
+            font-size: 1.1rem;
+        }
+
+        .repository-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(111, 66, 193, 0.4);
+        }
+
+        .repository-link .github-icon {
+            margin-right: 0.8rem;
+            font-size: 1.3rem;
+        }
+
+        .teacher-info {
+            text-align: left;
+        }
+
+        .teacher-header {
+            margin-bottom: 2rem;
+        }
+
+        .teacher-header h3 {
+            font-size: 2.5rem;
+            margin-bottom: 0.8rem;
+            color: #6f42c1;
+            font-weight: 600;
+        }
+
+        .teacher-title {
+            font-size: 1.4rem;
+            opacity: 0.8;
+            color: #666;
+            font-weight: 400;
+        }
+
+        .teacher-description {
+            margin-bottom: 2.5rem;
+        }
+
+        .teacher-description p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+            color: #555;
+        }
+
+        .teacher-highlights {
+            display: flex;
+            justify-content: space-around;
+            gap: 2rem;
+        }
+
+        .highlight-item {
+            text-align: center;
+            flex: 1;
+            padding: 1.5rem;
+            background: rgba(111, 66, 193, 0.05);
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .highlight-item:hover {
+            background: rgba(111, 66, 193, 0.1);
+            transform: translateY(-5px);
+        }
+
+        .highlight-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .highlight-item span:last-child {
+            font-weight: 500;
+            color: #555;
+            font-size: 1rem;
+        }
+
+        .teacher-cta {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .linkedin-link {
+            display: inline-flex;
+            align-items: center;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(111, 66, 193, 0.3);
+            font-size: 1.1rem;
+        }
+
+        .linkedin-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(111, 66, 193, 0.4);
+        }
+
+        .linkedin-icon {
+            margin-right: 0.8rem;
+            font-size: 1.3rem;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 4rem;
+            color: white;
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+
+        .coming-soon {
+            opacity: 0.75;
+            cursor: not-allowed;
+            position: relative;
+        }
+
+        .coming-soon::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            pointer-events: none;
+        }
+
+        .coming-soon:hover {
+            transform: none;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+
+        .coming-soon-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            font-weight: 600;
+            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.3);
+            position: relative;
+            z-index: 1;
+            font-size: 0.9rem;
+        }
+
+        .module-number {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-right: 0.5rem;
+        }
+
+        @media (max-width: 1200px) {
+            .classes-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .classes-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                max-width: 100%;
+            }
+
+            .class-card {
+                padding: 2rem;
+                min-height: auto;
+            }
+
+            .teacher-section {
+                padding: 1.5rem;
+            }
+
+            .teacher-highlights {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .highlight-item {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🐍 Python 0 a Senior</h1>
+            <p><strong>Programa Completo:</strong> De Cero a Desarrollador Senior</p>
+            <p>Cohorte 4 - Experiencia Formativa Integral</p>
+        </div>
+
+        <div class="module-description">
+            <p>Este programa es mucho más que un curso. Es una <strong>experiencia formativa integral</strong> diseñada para llevarte de cero al nivel senior en desarrollo de software con Python, dominando tanto el backend como el frontend, integrando Inteligencia Artificial en todo el proceso, y creando proyectos reales para el mundo real.</p>
+            <p>A lo largo de <strong>12 módulos</strong>, aprenderás desde los fundamentos del lenguaje hasta el despliegue completo de sistemas profesionales en producción, usando herramientas actuales como FastAPI, PostgreSQL, React, Tailwind, Docker, GitHub Actions, Vercel y Railway. Todo, con el poder de la IA a tu lado, ayudándote a escribir código limpio, validado, seguro y de alto impacto.</p>
+        </div>
+
+        <div class="classes-grid">
+            <!-- Módulo 1: Fundamentos Modernos -->
+            <a href="Modulo 1/index.html" class="class-card">
+                <h2><span class="module-number">M1</span>🚀 Fundamentos Modernos</h2>
+                <p>Fundamentos modernos de programación con Python e Inteligencia Artificial.</p>
+                <ul class="class-topics">
+                    <li>Python moderno</li>
+                    <li>Variables y tipos de datos</li>
+                    <li>Operadores y estructuras</li>
+                    <li>Funciones básicas</li>
+                    <li>Introducción a IA</li>
+                </ul>
+                <span class="class-link">Acceder al Material</span>
+            </a>
+
+            <!-- Módulo 2: Programación Orientada a Objetos -->
+            <a href="Modulo 2/index.html" class="class-card">
+                <h2><span class="module-number">M2</span>🏗️ POO</h2>
+                <p>Programación Orientada a Objetos: clases, herencia, polimorfismo y patrones de diseño.</p>
+                <ul class="class-topics">
+                    <li>Clases y objetos</li>
+                    <li>Herencia y polimorfismo</li>
+                    <li>Encapsulamiento</li>
+                    <li>Patrones de diseño</li>
+                    <li>Métodos especiales</li>
+                </ul>
+                <span class="class-link">Acceder al Material</span>
+            </a>
+
+            <!-- Módulo 3: Estructuras de Datos e IA -->
+            <div class="class-card coming-soon">
+                <h2><span class="module-number">M3</span>📊 Estructuras + IA</h2>
+                <p>Estructuras de datos y manipulación inteligente con Inteligencia Artificial.</p>
+                <ul class="class-topics">
+                    <li>Listas y diccionarios</li>
+                    <li>Tuplas y sets</li>
+                    <li>Comprensión de datos</li>
+                    <li>Manipulación con IA</li>
+                    <li>Análisis inteligente</li>
+                </ul>
+                <span class="coming-soon-badge">Próximamente</span>
+            </div>
+
+            <!-- Módulo 4: Archivos y Persistencia -->
+            <div class="class-card coming-soon">
+                <h2><span class="module-number">M4</span>📁 Archivos & IA</h2>
+                <p>Manejo de archivos, persistencia y validación con Inteligencia Artificial.</p>
+                <ul class="class-topics">
+                    <li>Lectura y escritura</li>
+                    <li>JSON y XML</li>
+                    <li>Persistencia de datos</li>
+                    <li>Validación con IA</li>
+                    <li>Procesamiento inteligente</li>
+                </ul>
+                <span class="coming-soon-badge">Próximamente</span>
+            </div>
+
+            <!-- Módulo 5: Bases de Datos -->
+            <div class="class-card coming-soon">
+                <h2><span class="module-number">M5</span>🗄️ PostgreSQL + IA</h2>
+                <p>Bases de datos relacionales con PostgreSQL e integración profesional con Python + IA.</p>
+                <ul class="class-topics">
+                    <li>PostgreSQL avanzado</li>
+                    <li>SQLAlchemy ORM</li>
+                    <li>Integración con Python</li>
+                    <li>IA en bases de datos</li>
+                    <li>Optimización profesional</li>
+                </ul>
+                <span class="coming-soon-badge">Próximamente</span>
+            </div>
+
+            <!-- Módulo 6: FastAPI Profesional -->
+            <div class="class-card coming-soon">
+                <h2><span class="module-number">M6</span>⚡ FastAPI + IA</h2>
+                <p>Desarrollo de APIs profesionales con FastAPI + Python + Inteligencia Artificial.</p>
+                <ul class="class-topics">
+                    <li>FastAPI framework</li>
+                    <li>Pydantic y validación</li>
+                    <li>Documentación automática</li>
+                    <li>Integración con IA</li>
+                    <li>APIs profesionales</li>
+                </ul>
+                <span class="coming-soon-badge">Próximamente</span>
+            </div>
+
+            <!-- Módulo 7: Seguridad en APIs -->
+            <div class="class-card coming-soon">
+                <h2><span class="module-number">M7</span>🔒 Seguridad</h2>
+                <p>Seguridad en APIs con JWT, autenticación y manejo de errores profesionales.</p>
+                <ul class="class-topics">
+                    <li>JWT y autenticación</li>
+                    <li>Autorización avanzada</li>
+                    <li>Manejo de errores</li>
+                    <li>Seguridad profesional</li>
+                    <li>Validación de datos</li>
+                </ul>
+                <span class="coming-soon-badge">Próximamente</span>
+            </div>
+
+            <!-- Módulo 8: Frontend React -->
+            <div class="class-card coming-soon">
+                <h2><span class="module-number">M8</span>⚛️ React + IA</h2>
+                <p>Frontend profesional con React JS, consumo de APIs y UI moderna con IA.</p>
+                <ul class="class-topics">
+                    <li>React JS profesional</li>
+                    <li>Consumo de APIs</li>
+                    <li>UI moderna</li>
+                    <li>Integración con IA</li>
+                    <li>Componentes avanzados</li>
+                </ul>
+                <span class="coming-soon-badge">Próximamente</span>
+            </div>
+
+            <!-- Módulo 9: Proyecto Full Stack -->
+            <div class="class-card coming-soon">
+                <h2><span class="module-number">M9</span>🎓 Universidad Digital</h2>
+                <p>Proyecto full stack real: Universidad Digital (Python + FastAPI + React + IA).</p>
+                <ul class="class-topics">
+                    <li>Arquitectura completa</li>
+                    <li>Python + FastAPI</li>
+                    <li>React frontend</li>
+                    <li>IA integrada</li>
+                    <li>Proyecto real</li>
+                </ul>
+                <span class="coming-soon-badge">Próximamente</span>
+            </div>
+
+            <!-- Módulo 10: Testing y Calidad -->
+            <div class="class-card coming-soon">
+                <h2><span class="module-number">M10</span>🧪 Testing + IA</h2>
+                <p>Testing, cobertura y calidad profesional del código con Inteligencia Artificial.</p>
+                <ul class="class-topics">
+                    <li>Testing automatizado</li>
+                    <li>Cobertura de código</li>
+                    <li>Calidad profesional</li>
+                    <li>IA en testing</li>
+                    <li>Mejores prácticas</li>
+                </ul>
+                <span class="coming-soon-badge">Próximamente</span>
+            </div>
+
+            <!-- Módulo 11: DevOps -->
+            <div class="class-card coming-soon">
+                <h2><span class="module-number">M11</span>🔄 DevOps</h2>
+                <p>DevOps y despliegue profesional con Docker, GitHub Actions, Railway y Vercel.</p>
+                <ul class="class-topics">
+                    <li>Docker y contenedores</li>
+                    <li>GitHub Actions</li>
+                    <li>Railway y Vercel</li>
+                    <li>CI/CD profesional</li>
+                    <li>Despliegue automatizado</li>
+                </ul>
+                <span class="coming-soon-badge">Próximamente</span>
+            </div>
+
+            <!-- Módulo 12: Proyecto Final -->
+            <div class="class-card coming-soon">
+                <h2><span class="module-number">M12</span>🎯 Proyecto Final</h2>
+                <p>Proyecto final profesional full stack + defensa técnica y portafolio.</p>
+                <ul class="class-topics">
+                    <li>Proyecto completo</li>
+                    <li>Full stack profesional</li>
+                    <li>Defensa técnica</li>
+                    <li>Portafolio</li>
+                    <li>Presentación final</li>
+                </ul>
+                <span class="coming-soon-badge">Próximamente</span>
+            </div>
+        </div>
+
+        <div class="repository-section">
+            <h2>📁 Repositorio del Curso</h2>
+            <p>Encuentra todo el código, ejemplos y proyectos desarrollados durante las clases en nuestro repositorio de GitHub.</p>
+            <a href="https://github.com/JuanDavidTriana/Python-0-A-Senior-Cohorte-4" target="_blank" class="repository-link">
+                <span class="github-icon">🐙</span>
+                Ver Repositorio en GitHub
+            </a>
+        </div>
+
+
+
+        <div class="footer">
+            <p>&copy; 2024 Python 0 a Senior - Cohorte 4. Todos los derechos reservados.</p>
+        </div>
+    </div>
+</body>
+</html> 

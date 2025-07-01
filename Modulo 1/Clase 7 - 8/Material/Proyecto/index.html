@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proyecto Final - Clase 7</title>
+    <link rel="stylesheet" href="../styles/navbar.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #6f42c1, #9c27b0);
+            color: #fff;
+            text-align: center;
+            padding: 4rem 2rem;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            letter-spacing: -2px;
+            margin-bottom: 1rem;
+            color: #fff;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            font-weight: 400;
+            margin-bottom: 2rem;
+            color: #e9d8fd;
+            position: relative;
+            z-index: 1;
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 2rem;
+            left: 2rem;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            text-decoration: none;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .section {
+            background: white;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .section:hover {
+            transform: translateY(-5px);
+        }
+
+        .section h2 {
+            color: #6f42c1;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .section h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: #9c27b0;
+            border-radius: 2px;
+        }
+
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .code-comment {
+            color: #68d391;
+        }
+
+        .code-keyword {
+            color: #f6ad55;
+        }
+
+        .code-string {
+            color: #fc8181;
+        }
+
+        .code-function {
+            color: #63b3ed;
+        }
+
+        .project-box {
+            background: linear-gradient(135deg, #6f42c1, #9c27b0);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+        }
+
+        .requirements {
+            background: #f8f9fa;
+            border: 2px solid #6f42c1;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        .requirements h4 {
+            color: #6f42c1;
+            margin-bottom: 1rem;
+        }
+
+        .requirements ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .requirements li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .requirements li:before {
+            content: "✅ ";
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .bonus {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        .bonus h4 {
+            color: #856404;
+            margin-bottom: 1rem;
+        }
+
+        .bonus li:before {
+            content: "🌟 ";
+            color: #ffc107;
+            font-weight: bold;
+        }
+
+        .example-output {
+            background: #e6fffa;
+            border: 2px solid #38b2ac;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            font-family: 'Consolas', 'Monaco', monospace;
+        }
+
+        .example-output h4 {
+            color: #2c7a7b;
+            margin-bottom: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+            
+            main {
+                padding: 1rem;
+            }
+            
+            .section {
+                padding: 1.5rem;
+            }
+        }
+
+        .project-list {
+            margin-left: 0;
+            margin-bottom: 1.5rem;
+            padding-left: 0;
+            list-style: none;
+        }
+        .project-list > li {
+            position: relative;
+            margin-bottom: 0.7rem;
+            font-size: 1.08rem;
+            padding-left: 2rem;
+        }
+        .project-list > li::before {
+            content: '';
+            position: absolute;
+            left: 0.3rem;
+            top: 0.8rem;
+            width: 0.65rem;
+            height: 0.65rem;
+            background: #7C3AED;
+            border-radius: 50%;
+            box-shadow: 0 1px 4px rgba(124,58,237,0.13);
+            display: inline-block;
+        }
+        .project-list > li > b,
+        .project-list > li > strong {
+            color: #6f42c1;
+            font-weight: bold;
+        }
+        .project-list ul {
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+            margin-left: 1.5rem;
+            padding-left: 0.5rem;
+            list-style: none;
+        }
+        .project-list ul li {
+            position: relative;
+            font-size: 1.01rem;
+            margin-bottom: 0.3rem;
+            padding-left: 1.5rem;
+        }
+        .project-list ul li::before {
+            content: '';
+            position: absolute;
+            left: 0.1rem;
+            top: 0.7rem;
+            width: 0.45rem;
+            height: 0.45rem;
+            background: #b794f4;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .project-list pre.code-block.syntax-highlight {
+            margin-left: 0;
+            margin-bottom: 0.7rem;
+        }
+
+        .project-section-title {
+            color: #6f42c1;
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-top: 2.2rem;
+            margin-bottom: 0.7rem;
+            letter-spacing: -0.5px;
+        }
+
+        .github-reminder {
+            background: #f3e8ff;
+            color: #4B2067;
+            border-left: 5px solid #7C3AED;
+            border-radius: 8px;
+            margin: 1.2rem auto 1.5rem auto;
+            padding: 1rem 1.5rem;
+            font-size: 1.08rem;
+            display: flex;
+            align-items: center;
+            gap: 0.9rem;
+            max-width: 700px;
+            box-shadow: 0 2px 8px rgba(111,66,193,0.07);
+            justify-content: center;
+            text-align: left;
+        }
+        .github-icon {
+            font-size: 1.7rem;
+            margin-right: 0.7rem;
+        }
+        .github-link {
+            color: #7C3AED;
+            font-weight: bold;
+            text-decoration: underline;
+            transition: color 0.2s;
+        }
+        .github-link:hover {
+            color: #4B2067;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="../index.html" class="navbar-brand">Clase 7</a>
+            <div class="navbar-links">
+                <a href="../index.html" class="nav-link">Inicio</a>
+                <a href="../Funciones/index.html" class="nav-link">Funciones</a>
+                <a href="../Ejercicios/index.html" class="nav-link">Ejercicios</a>
+                <a href="index.html" class="nav-link active">Proyecto</a>
+            </div>
+        </div>
+    </nav>
+    <div class="hero">
+        <h1>Proyecto Final</h1>
+        <p>MiniBiblio - Sistema Simplificado</p>
+    </div>
+
+    <main>
+        <div class="project-box">
+            <h3>📚 MiniBiblio - Sistema de Gestión de Biblioteca Simplificado</h3>
+            
+            <p>Desarrolla un sistema básico de gestión de biblioteca en consola utilizando funciones y estructuras de datos simples. Este proyecto te permitirá aplicar tus conocimientos de manera práctica sin complejidades innecesarias.</p>
+            <div class="github-reminder">
+                <span class="github-icon">🐙</span>
+                <span><b>Recuerda:</b> Sube todos tus ejercicios y tu proyecto a <a href="https://github.com/" target="_blank" class="github-link">GitHub</a> para seguir practicando el uso de esta herramienta y llevar un registro de tu progreso.</span>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>✅ Proyecto Simplificado: "MiniBiblio"</h2>
+            
+            <h3 class="project-section-title">1. 📌 Descripción General</h3>
+            <p>Este proyecto es una versión reducida de un sistema de gestión de biblioteca en consola. Su propósito es permitir registrar libros y socios, y simular préstamos y devoluciones de forma sencilla. Trabaja con funciones y estructuras básicas de datos (listas de diccionarios), pero elimina la necesidad de manejar múltiples archivos, fechas o búsquedas complejas.</p>
+            
+            <h3 class="project-section-title">2. 🎯 Objetivos de Aprendizaje</h3>
+            <ul class="project-list">
+                <li>Utilizar funciones simples con parámetros y retorno.</li>
+                <li>Organizar código de forma clara y reutilizable.</li>
+                <li>Manipular listas de diccionarios.</li>
+                <li>Crear una interfaz en consola con menú simple (TUI).</li>
+            </ul>
+            
+            <h3 class="project-section-title">3. 🧩 Funcionalidades Requeridas</h3>
+            <p>El menú principal debe permitir al usuario realizar estas acciones básicas:</p>
+            
+            <ul class="project-list">
+                <li><b>1. Registrar Libro</b>
+                    <ul>
+                        <li>Pedir: título, autor, ISBN.</li>
+                        <li>Guardar el libro como disponible.</li>
+                    </ul>
+                </li>
+                <li><b>2. Registrar Socio</b>
+                    <ul>
+                        <li>Pedir: nombre y contacto.</li>
+                        <li>Asignar ID automático tipo SOC-001, SOC-002, etc.</li>
+                    </ul>
+                </li>
+                <li><b>3. Prestar Libro</b>
+                    <ul>
+                        <li>Pedir ISBN y ID del socio.</li>
+                        <li>Marcar el libro como prestado, con el ID del socio.</li>
+                    </ul>
+                </li>
+                <li><b>4. Devolver Libro</b>
+                    <ul>
+                        <li>Pedir ISBN.</li>
+                        <li>Cambiar estado a "Disponible".</li>
+                    </ul>
+                </li>
+                <li><b>5. Ver libros prestados</b>
+                    <ul>
+                        <li>Mostrar solo los libros cuyo estado es "Prestado".</li>
+                    </ul>
+                </li>
+            </ul>
+            
+            <h3 class="project-section-title">4. ⚙️ Estructura Técnica</h3>
+            <ul class="project-list">
+                <li><b>Un solo archivo:</b> biblioteca.py</li>
+                <li><b>Uso de:</b>
+                    <ul>
+                        <li>while True con menú.</li>
+                        <li>funciones como registrar_libro(), prestar_libro()...</li>
+                    </ul>
+                </li>
+            </ul>
+            
+            <h3 class="project-section-title">5. 💡 Ejemplo de Menú en Consola</h3>
+            <div class="code-block">
+<pre><code><span class="code-comment"># Menú principal</span>
+<span class="code-keyword">print</span>(<span class="code-string">"""
+=== MINIBIBLIO ===
+1. Registrar Libro
+2. Registrar Socio
+3. Prestar Libro
+4. Devolver Libro
+5. Ver libros prestados
+6. Salir
+"""</span>)</code></pre>
+            </div>
+            
+            <h3 class="project-section-title">6. 🧪 Sugerencias para Pruebas</h3>
+            <ul class="project-list">
+                <li>Registrar 2 libros y 2 socios.</li>
+                <li>Prestar un libro y luego devolverlo.</li>
+                <li>Ver cómo se actualizan los estados.</li>
+            </ul>
+            
+            <h3 class="project-section-title">7. 📁 Estructura de Código Sugerida</h3>
+            <div class="code-block">
+<pre><code><span class="code-comment"># Base de datos en memoria</span>
+libros_db = []
+socios_db = []
+
+<span class="code-comment"># Ejemplo de estructura de datos</span>
+libros_db = [
+    {<span class="code-string">'isbn'</span>: <span class="code-string">'001'</span>, <span class="code-string">'titulo'</span>: <span class="code-string">'El Principito'</span>, <span class="code-string">'autor'</span>: <span class="code-string">'Antoine'</span>, <span class="code-string">'estado'</span>: <span class="code-string">'Disponible'</span>}
+]
+
+socios_db = [
+    {<span class="code-string">'id'</span>: <span class="code-string">'SOC-001'</span>, <span class="code-string">'nombre'</span>: <span class="code-string">'Ana'</span>, <span class="code-string">'contacto'</span>: <span class="code-string">'123'</span>}
+]
+
+<span class="code-function">def</span> <span class="code-function">registrar_libro</span>():
+    <span class="code-comment"># pedir datos, agregar libro a libros_db</span>
+    <span class="code-keyword">pass</span>
+
+<span class="code-function">def</span> <span class="code-function">registrar_socio</span>():
+    <span class="code-comment"># pedir nombre/contacto, generar ID tipo SOC-001, agregar a socios_db</span>
+    <span class="code-keyword">pass</span>
+
+<span class="code-function">def</span> <span class="code-function">prestar_libro</span>():
+    <span class="code-comment"># buscar libro y socio, cambiar estado</span>
+    <span class="code-keyword">pass</span>
+
+<span class="code-function">def</span> <span class="code-function">devolver_libro</span>():
+    <span class="code-comment"># buscar libro por ISBN, cambiar estado</span>
+    <span class="code-keyword">pass</span>
+
+<span class="code-function">def</span> <span class="code-function">ver_prestados</span>():
+    <span class="code-comment"># recorrer libros y mostrar los prestados</span>
+    <span class="code-keyword">pass</span></code></pre>
+            </div>
+            
+            <h3 class="project-section-title">8. 📋 Ejemplo de Funcionamiento</h3>
+            <div class="example-output">
+                <h4>Ejemplo de interacción:</h4>
+                <pre>
+=== MINIBIBLIO ===
+1. Registrar Libro
+2. Registrar Socio
+3. Prestar Libro
+4. Devolver Libro
+5. Ver libros prestados
+6. Salir
+
+Opción: 1
+Título: El Principito
+Autor: Antoine de Saint-Exupéry
+ISBN: 001
+
+✅ Libro registrado exitosamente!
+
+Opción: 2
+Nombre: Ana García
+Contacto: 3101234567
+
+✅ Socio registrado con ID: SOC-001
+
+Opción: 3
+ISBN del libro: 001
+ID del socio: SOC-001
+
+✅ Libro prestado exitosamente!
+
+Opción: 5
+📚 LIBROS PRESTADOS:
+- El Principito (ISBN: 001) - Prestado a: Ana García
+                </pre>
+            </div>
+        </div>
+
+        <div class="project-box">
+            <h3>🚀 ¡Manos a la obra!</h3>
+            <p>Este proyecto simplificado te permitirá aplicar los conceptos básicos de funciones y estructuras de datos de manera práctica. ¡Disfruta creando tu MiniBiblio y demuestra lo que has aprendido!</p>
+        </div>
+    </main>
+</body>
+</html> 

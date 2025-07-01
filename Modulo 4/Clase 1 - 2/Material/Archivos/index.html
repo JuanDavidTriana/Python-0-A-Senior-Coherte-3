@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Archivos de Texto Plano - Clase 1 - 2</title>
+    <link rel="stylesheet" href="../styles/navbar.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            min-height: 100vh;
+            background-attachment: fixed;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 4rem;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            font-weight: 700;
+            letter-spacing: -1px;
+        }
+
+        .header p {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        .content-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .content-section h2 {
+            color: #6f42c1;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .content-section h3 {
+            color: #6f42c1;
+            font-size: 1.8rem;
+            margin: 2rem 0 1rem 0;
+            font-weight: 600;
+        }
+
+        .content-section p {
+            color: #555;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+
+        .content-section ul {
+            margin: 1.5rem 0;
+            padding-left: 2rem;
+        }
+
+        .content-section li {
+            color: #555;
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .code-block {
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            overflow-x: auto;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            border: 1px solid #2d3748;
+        }
+
+        .code-block pre {
+            margin: 0;
+            padding: 0;
+        }
+
+        .code-block code {
+            color: #e2e8f0;
+        }
+
+        /* Colores de sintaxis */
+        .code-keyword {
+            color: #ff6b6b;
+            font-weight: bold;
+        }
+
+        .code-string {
+            color: #51cf66;
+        }
+
+        .code-comment {
+            color: #868e96;
+            font-style: italic;
+        }
+
+        .code-function {
+            color: #74c0fc;
+        }
+
+        .code-class {
+            color: #ffd43b;
+            font-weight: bold;
+        }
+
+        .code-number {
+            color: #fcc419;
+        }
+
+        .code-operator {
+            color: #ff922b;
+        }
+
+        .code-attribute {
+            color: #da77f2;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            box-shadow: 0 8px 25px rgba(111, 66, 193, 0.3);
+        }
+
+        .highlight-box h3 {
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .highlight-box ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .highlight-box li {
+            color: white;
+            margin-bottom: 0.8rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .highlight-box li::before {
+            content: '▶';
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        .next-section {
+            text-align: center;
+            margin-top: 6rem;
+            margin-bottom: 4rem;
+            padding: 3.5rem 3.5rem 2.8rem 3.5rem;
+            background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);
+            border-radius: 32px;
+            box-shadow: 0 8px 32px rgba(111, 66, 193, 0.18);
+            max-width: 950px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .next-section h2 {
+            font-size: 2.3rem;
+            color: #2d1e4a;
+            font-weight: 800;
+            margin-bottom: 1.2rem;
+            text-shadow: 0 2px 8px rgba(111,66,193,0.10);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.7rem;
+        }
+        .next-section p {
+            font-size: 1.25rem;
+            color: #2d1e4a;
+            margin-bottom: 2.5rem;
+            font-weight: 500;
+        }
+        .next-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.7rem;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            padding: 1.3rem 3.5rem;
+            border-radius: 2.5rem;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.35rem;
+            box-shadow: 0 6px 24px rgba(111, 66, 193, 0.18);
+            transition: all 0.2s cubic-bezier(.4,2,.6,1);
+            border: none;
+        }
+        .next-link:hover {
+            background: linear-gradient(90deg, #764ba2 0%, #667eea 100%);
+            transform: translateY(-3px) scale(1.04);
+            box-shadow: 0 12px 32px rgba(111, 66, 193, 0.25);
+        }
+        .next-link .emoji {
+            font-size: 1.7em;
+            margin-right: 0.3em;
+        }
+        @media (max-width: 768px) {
+            .next-section {
+                padding: 2rem 0.5rem 1.5rem 0.5rem;
+                max-width: 98vw;
+            }
+            .next-section h2 {
+                font-size: 1.3rem;
+            }
+            .next-link {
+                font-size: 1rem;
+                padding: 1rem 1.5rem;
+            }
+        }
+        .footer {
+            text-align: center;
+            margin-top: 4rem;
+            color: white;
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="../../index.html" class="navbar-brand">Python 0 a Senior</a>
+            <div class="navbar-links">
+                <a href="../index.html" class="nav-link">🏠 Inicio</a>
+                <a href="../index.html" class="nav-link">📁 Archivos</a>
+                <a href="index.html" class="nav-link active">📝 Texto Plano</a>
+                <a href="../Validacion/index.html" class="nav-link">🔍 Validación</a>
+                <a href="../Proyecto/index.html" class="nav-link">💪 Proyecto</a>
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="container">
+        <div class="header">
+            <h1>📝 Archivos de Texto Plano</h1>
+            <p>Comprende cómo funciona la persistencia de datos en archivos .txt</p>
+        </div>
+
+        <div class="content-section">
+            <h2>📁 ¿Qué es la Persistencia de Datos?</h2>
+            <p>La persistencia de datos es la capacidad de almacenar información de forma permanente en archivos, permitiendo que los datos sobrevivan después de que el programa termine su ejecución. Los archivos de texto plano (.txt) son la forma más básica y fundamental de persistencia.</p>
+            
+            <div class="highlight-box">
+                <h3>🌟 Ventajas de los Archivos de Texto Plano</h3>
+                <ul>
+                    <li><strong>Simplicidad:</strong> Formato fácil de leer y escribir</li>
+                    <li><strong>Portabilidad:</strong> Funcionan en cualquier sistema operativo</li>
+                    <li><strong>Compatibilidad:</strong> Pueden ser abiertos por cualquier editor de texto</li>
+                    <li><strong>Eficiencia:</strong> Ocupan poco espacio en disco</li>
+                    <li><strong>Debugging:</strong> Fácil de inspeccionar y depurar</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>🔧 Métodos de Apertura, Lectura, Escritura y Cierre</h2>
+            <h3>📂 Operaciones Básicas de I/O</h3>
+            <p>Python proporciona funciones integradas para trabajar con archivos de texto. El flujo básico consiste en abrir un archivo, realizar operaciones (lectura/escritura) y cerrarlo de forma segura.</p>
+            
+            <h3>📋 Modos de Apertura de Archivos</h3>
+            <ul>
+                <li><strong>'r' (read):</strong> Modo de solo lectura (por defecto)</li>
+                <li><strong>'w' (write):</strong> Modo de escritura (sobrescribe el archivo)</li>
+                <li><strong>'a' (append):</strong> Modo de añadir al final del archivo</li>
+                <li><strong>'r+' (read+write):</strong> Modo de lectura y escritura</li>
+                <li><strong>'x' (exclusive):</strong> Crear archivo solo si no existe</li>
+            </ul>
+        </div>
+
+        <div class="content-section">
+            <h2>📖 Lectura de Archivos de Texto</h2>
+            <p>La lectura de archivos es fundamental para acceder a datos persistentes. Python ofrece varios métodos para leer archivos de texto:</p>
+            
+            <h3>📖 Métodos de Lectura</h3>
+            <p>Existen diferentes formas de leer el contenido de un archivo:</p>
+            <div class="code-block">
+<pre><code><span class="code-comment"># 1. Lectura completa del archivo</span>
+<span class="code-keyword">with</span> <span class="code-function">open</span>(<span class="code-string">'datos.txt'</span>, <span class="code-string">'r'</span>) <span class="code-keyword">as</span> archivo:
+    contenido = archivo.<span class="code-function">read</span>()  <span class="code-comment"># Lee todo el archivo</span>
+    <span class="code-function">print</span>(contenido)
+
+<span class="code-comment"># 2. Lectura línea por línea</span>
+<span class="code-keyword">with</span> <span class="code-function">open</span>(<span class="code-string">'datos.txt'</span>, <span class="code-string">'r'</span>) <span class="code-keyword">as</span> archivo:
+    <span class="code-keyword">for</span> linea <span class="code-keyword">in</span> archivo:
+        <span class="code-function">print</span>(linea.<span class="code-function">strip</span>())  <span class="code-comment"># strip() elimina espacios y saltos</span>
+
+<span class="code-comment"># 3. Lectura de todas las líneas en una lista</span>
+<span class="code-keyword">with</span> <span class="code-function">open</span>(<span class="code-string">'datos.txt'</span>, <span class="code-string">'r'</span>) <span class="code-keyword">as</span> archivo:
+    lineas = archivo.<span class="code-function">readlines</span>()  <span class="code-comment"># Lista de líneas</span>
+    <span class="code-function">print</span>(lineas)
+
+<span class="code-comment"># 4. Lectura de una línea específica</span>
+<span class="code-keyword">with</span> <span class="code-function">open</span>(<span class="code-string">'datos.txt'</span>, <span class="code-string">'r'</span>) <span class="code-keyword">as</span> archivo:
+    primera_linea = archivo.<span class="code-function">readline</span>()  <span class="code-comment"># Lee solo la primera línea</span>
+    <span class="code-function">print</span>(primera_linea)</code></pre>
+            </div>
+
+            <h3>⚡ Escritura de Archivos</h3>
+            <p>La escritura permite crear y modificar archivos de texto:</p>
+            <div class="code-block">
+<pre><code><span class="code-comment"># 1. Escritura básica (sobrescribe el archivo)</span>
+<span class="code-keyword">with</span> <span class="code-function">open</span>(<span class="code-string">'nuevo.txt'</span>, <span class="code-string">'w'</span>) <span class="code-keyword">as</span> archivo:
+    archivo.<span class="code-function">write</span>(<span class="code-string">"Hola, este es un archivo nuevo\n"</span>)
+    archivo.<span class="code-function">write</span>(<span class="code-string">"Segunda línea del archivo\n"</span>)
+
+<span class="code-comment"># 2. Añadir contenido al final (append)</span>
+<span class="code-keyword">with</span> <span class="code-function">open</span>(<span class="code-string">'nuevo.txt'</span>, <span class="code-string">'a'</span>) <span class="code-keyword">as</span> archivo:
+    archivo.<span class="code-function">write</span>(<span class="code-string">"Esta línea se añade al final\n"</span>)
+
+<span class="code-comment"># 3. Escritura de múltiples líneas</span>
+lineas = [<span class="code-string">"Línea 1"</span>, <span class="code-string">"Línea 2"</span>, <span class="code-string">"Línea 3"</span>]
+<span class="code-keyword">with</span> <span class="code-function">open</span>(<span class="code-string">'lista.txt'</span>, <span class="code-string">'w'</span>) <span class="code-keyword">as</span> archivo:
+    archivo.<span class="code-function">writelines</span>(linea + <span class="code-string">'\n'</span> <span class="code-keyword">for</span> linea <span class="code-keyword">in</span> lineas)</code></pre>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>🔒 Cierre Seguro de Archivos</h2>
+            <p>El cierre seguro de archivos es fundamental para evitar pérdida de datos y liberar recursos del sistema. Python ofrece el contexto manager `with` para garantizar el cierre automático.</p>
+            
+            <h3>🛡️ Uso del Context Manager (with)</h3>
+            <p>El contexto manager garantiza que el archivo se cierre automáticamente, incluso si ocurre una excepción:</p>
+            <div class="code-block">
+<pre><code><span class="code-comment"># ❌ Forma NO recomendada (puede causar problemas)</span>
+archivo = <span class="code-function">open</span>(<span class="code-string">'datos.txt'</span>, <span class="code-string">'r'</span>)
+contenido = archivo.<span class="code-function">read</span>()
+archivo.<span class="code-function">close</span>()  <span class="code-comment"># Si hay error antes, el archivo no se cierra</span>
+
+<span class="code-comment"># ✅ Forma RECOMENDADA (con context manager)</span>
+<span class="code-keyword">with</span> <span class="code-function">open</span>(<span class="code-string">'datos.txt'</span>, <span class="code-string">'r'</span>) <span class="code-keyword">as</span> archivo:
+    contenido = archivo.<span class="code-function">read</span>()
+    <span class="code-function">print</span>(contenido)
+<span class="code-comment"># El archivo se cierra automáticamente al salir del bloque</span>
+
+<span class="code-comment"># ✅ Múltiples archivos simultáneos</span>
+<span class="code-keyword">with</span> <span class="code-function">open</span>(<span class="code-string">'entrada.txt'</span>, <span class="code-string">'r'</span>) <span class="code-keyword">as</span> entrada, \
+     <span class="code-function">open</span>(<span class="code-string">'salida.txt'</span>, <span class="code-string">'w'</span>) <span class="code-keyword">as</span> salida:
+    contenido = entrada.<span class="code-function">read</span>()
+    salida.<span class="code-function">write</span>(contenido.<span class="code-function">upper</span>())</code></pre>
+            </div>
+
+            <h3>🎯 Manejo de Rutas y Directorios</h3>
+            <p>Es importante manejar correctamente las rutas de archivos para evitar errores:</p>
+            <div class="code-block">
+<pre><code><span class="code-keyword">import</span> os
+<span class="code-keyword">from</span> pathlib <span class="code-keyword">import</span> Path
+
+<span class="code-comment"># 1. Verificar si un archivo existe</span>
+<span class="code-keyword">if</span> os.<span class="code-function">path.exists</span>(<span class="code-string">'datos.txt'</span>):
+    <span class="code-keyword">with</span> <span class="code-function">open</span>(<span class="code-string">'datos.txt'</span>, <span class="code-string">'r'</span>) <span class="code-keyword">as</span> archivo:
+        contenido = archivo.<span class="code-function">read</span>()
+
+<span class="code-comment"># 2. Crear directorio si no existe</span>
+os.<span class="code-function">makedirs</span>(<span class="code-string">'datos'</span>, exist_ok=<span class="code-keyword">True</span>)
+
+<span class="code-comment"># 3. Usar Path para rutas más robustas</span>
+ruta_archivo = Path(<span class="code-string">'datos'</span>) / <span class="code-string">'configuracion.txt'</span>
+<span class="code-keyword">with</span> <span class="code-function">open</span>(ruta_archivo, <span class="code-string">'w'</span>) <span class="code-keyword">as</span> archivo:
+    archivo.<span class="code-function">write</span>(<span class="code-string">"Configuración del sistema\n"</span>)</code></pre>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>🤖 Uso de IA para Organizar Operaciones de I/O</h2>
+            <p>Las herramientas de IA pueden ayudarte a optimizar y organizar las operaciones de entrada/salida de manera eficiente:</p>
+            
+            <div class="highlight-box">
+                <h3>🌟 Beneficios del Uso de IA en Manejo de Archivos</h3>
+                <ul>
+                    <li><strong>Optimización de Código:</strong> Generar funciones eficientes para I/O</li>
+                    <li><strong>Detección de Errores:</strong> Identificar problemas de manejo de archivos</li>
+                    <li><strong>Refactorización:</strong> Mejorar la estructura del código existente</li>
+                    <li><strong>Validaciones:</strong> Crear validaciones robustas automáticamente</li>
+                    <li><strong>Buenas Prácticas:</strong> Implementar patrones de manejo seguro</li>
+                </ul>
+            </div>
+
+            <h3>🎯 Ejemplo de Prompt para IA</h3>
+            <div class="code-block">
+<pre><code><span class="code-comment"># Prompt para generar funciones de manejo de archivos</span>
+<span class="code-string">"""
+Genera funciones en Python para manejar archivos de texto con:
+- Función para leer archivo con validación de existencia
+- Función para escribir archivo con backup automático
+- Función para procesar archivo línea por línea
+- Incluye manejo de errores y logging
+"""</span>
+
+<span class="code-comment"># La IA podría generar algo como:</span>
+<span class="code-keyword">import</span> os
+<span class="code-keyword">import</span> shutil
+<span class="code-keyword">from</span> datetime <span class="code-keyword">import</span> datetime
+
+<span class="code-keyword">def</span> <span class="code-function">leer_archivo_seguro</span>(ruta_archivo):
+    <span class="code-string">"""Lee un archivo de forma segura con validaciones"""</span>
+    <span class="code-keyword">if</span> <span class="code-keyword">not</span> os.<span class="code-function">path.exists</span>(ruta_archivo):
+        <span class="code-keyword">raise</span> FileNotFoundError(<span class="code-string">f"El archivo {ruta_archivo} no existe"</span>)
+    
+    <span class="code-keyword">try</span>:
+        <span class="code-keyword">with</span> <span class="code-function">open</span>(ruta_archivo, <span class="code-string">'r'</span>, encoding=<span class="code-string">'utf-8'</span>) <span class="code-keyword">as</span> archivo:
+            <span class="code-keyword">return</span> archivo.<span class="code-function">read</span>()
+    <span class="code-keyword">except</span> Exception <span class="code-keyword">as</span> e:
+        <span class="code-keyword">raise</span> IOError(<span class="code-string">f"Error al leer el archivo: {e}"</span>)
+
+<span class="code-keyword">def</span> <span class="code-function">escribir_archivo_con_backup</span>(ruta_archivo, contenido):
+    <span class="code-string">"""Escribe un archivo creando un backup automático"""</span>
+    <span class="code-keyword">if</span> os.<span class="code-function">path.exists</span>(ruta_archivo):
+        <span class="code-comment"># Crear backup</span>
+        timestamp = datetime.<span class="code-function">now</span>().<span class="code-function">strftime</span>(<span class="code-string">"%Y%m%d_%H%M%S"</span>)
+        backup_ruta = <span class="code-string">f"{ruta_archivo}.backup_{timestamp}"</span>
+        shutil.<span class="code-function">copy2</span>(ruta_archivo, backup_ruta)
+    
+    <span class="code-keyword">with</span> <span class="code-function">open</span>(ruta_archivo, <span class="code-string">'w'</span>, encoding=<span class="code-string">'utf-8'</span>) <span class="code-keyword">as</span> archivo:
+        archivo.<span class="code-function">write</span>(contenido)</code></pre>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>📋 Operaciones Básicas de I/O</h2>
+            <p>Python proporciona funciones integradas para trabajar con archivos de texto. Es fundamental comprender las operaciones básicas:</p>
+            
+            <h3>🎯 Funciones Principales para Archivos</h3>
+            <div class="code-block">
+<pre><code><span class="code-comment"># 1. open() - Abrir archivo</span>
+archivo = <span class="code-function">open</span>(<span class="code-string">'datos.txt'</span>, <span class="code-string">'r'</span>)  <span class="code-comment"># Modo lectura</span>
+
+<span class="code-comment"># 2. read() - Leer contenido completo</span>
+contenido = archivo.<span class="code-function">read</span>()
+
+<span class="code-comment"># 3. readline() - Leer una línea</span>
+linea = archivo.<span class="code-function">readline</span>()
+
+<span class="code-comment"># 4. readlines() - Leer todas las líneas</span>
+lineas = archivo.<span class="code-function">readlines</span>()
+
+<span class="code-comment"># 5. write() - Escribir contenido</span>
+archivo.<span class="code-function">write</span>(<span class="code-string">"Nuevo contenido\n"</span>)
+
+<span class="code-comment"># 6. writelines() - Escribir múltiples líneas</span>
+archivo.<span class="code-function">writelines</span>([<span class="code-string">"Línea 1\n"</span>, <span class="code-string">"Línea 2\n"</span>])
+
+<span class="code-comment"># 7. close() - Cerrar archivo</span>
+archivo.<span class="code-function">close</span>()</code></pre>
+            </div>
+
+            <h3>🔤 Codificación de Archivos</h3>
+            <p>Es importante especificar la codificación para evitar problemas con caracteres especiales:</p>
+            <div class="code-block">
+<pre><code><span class="code-comment"># Especificar codificación UTF-8 (recomendado)</span>
+<span class="code-keyword">with</span> <span class="code-function">open</span>(<span class="code-string">'datos.txt'</span>, <span class="code-string">'r'</span>, encoding=<span class="code-string">'utf-8'</span>) <span class="code-keyword">as</span> archivo:
+    contenido = archivo.<span class="code-function">read</span>()
+
+<span class="code-comment"># Para archivos con caracteres especiales</span>
+<span class="code-keyword">with</span> <span class="code-function">open</span>(<span class="code-string">'datos.txt'</span>, <span class="code-string">'w'</span>, encoding=<span class="code-string">'utf-8'</span>) <span class="code-keyword">as</span> archivo:
+    archivo.<span class="code-function">write</span>(<span class="code-string">"Texto con acentos: áéíóú ñ"</span>)
+
+<span class="code-comment"># Manejar diferentes codificaciones</span>
+<span class="code-keyword">try</span>:
+    <span class="code-keyword">with</span> <span class="code-function">open</span>(<span class="code-string">'datos.txt'</span>, <span class="code-string">'r'</span>, encoding=<span class="code-string">'utf-8'</span>) <span class="code-keyword">as</span> archivo:
+        contenido = archivo.<span class="code-function">read</span>()
+<span class="code-keyword">except</span> UnicodeDecodeError:
+    <span class="code-comment"># Intentar con otra codificación</span>
+    <span class="code-keyword">with</span> <span class="code-function">open</span>(<span class="code-string">'datos.txt'</span>, <span class="code-string">'r'</span>, encoding=<span class="code-string">'latin-1'</span>) <span class="code-keyword">as</span> archivo:
+        contenido = archivo.<span class="code-function">read</span>()</code></pre>
+            </div>
+        </div>
+
+        <div class="next-section">
+            <h2><span class="emoji">🚀</span>¿Listo para Continuar?</h2>
+            <p>¡Excelente! Ya comprendes los fundamentos de manejo de archivos de texto plano.<br>Ahora es momento de aprender sobre <b>validación y organización</b> del flujo de archivos.</p>
+            <a href="../Validacion/index.html" class="next-link"><span class="emoji">🔍</span>Continuar con Validación y Organización →</a>
+        </div>
+
+        <div class="footer">
+            <p>&copy; 2024 Python 0 a Senior - Cohorte 4. Todos los derechos reservados.</p>
+        </div>
+    </div>
+</body>
+</html> 

@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proyecto Final - Sistema de Gestión Inteligente para Bibliotecas Locales</title>
+    <link rel="stylesheet" href="../styles/navbar.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            min-height: 100vh;
+            background-attachment: fixed;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 4rem;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            font-weight: 700;
+            letter-spacing: -1px;
+        }
+
+        .header p {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        .content-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .content-section h2 {
+            color: #6f42c1;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .content-section h3 {
+            color: #6f42c1;
+            font-size: 1.8rem;
+            margin: 2rem 0 1rem 0;
+            font-weight: 600;
+        }
+
+        .content-section p {
+            color: #555;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+
+        .content-section ul {
+            margin: 1.5rem 0;
+            padding-left: 2rem;
+        }
+
+        .content-section li {
+            color: #555;
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .project-card {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 2.5rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            box-shadow: 0 8px 25px rgba(111, 66, 193, 0.3);
+        }
+
+        .project-card h3 {
+            color: white;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .project-card p {
+            color: white;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .project-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 1.5rem 0;
+        }
+
+        .project-card li {
+            color: white;
+            margin-bottom: 0.8rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .project-card li::before {
+            content: '▶';
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            overflow-x: auto;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .code-comment {
+            color: #68d391;
+        }
+
+        .code-keyword {
+            color: #f6ad55;
+        }
+
+        .code-string {
+            color: #fc8181;
+        }
+
+        .code-number {
+            color: #90cdf4;
+        }
+
+        .code-boolean {
+            color: #fbb6ce;
+        }
+
+        .requirement-badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .requirement-functional {
+            background: #68d391;
+            color: white;
+        }
+
+        .requirement-technical {
+            background: #f6ad55;
+            color: white;
+        }
+
+        .requirement-bonus {
+            background: #fc8181;
+            color: white;
+        }
+
+        .deliverable-section {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            padding: 2.5rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.3);
+        }
+
+        .deliverable-section h3 {
+            color: white;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+        }
+
+        .architecture-diagram {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .architecture-diagram h4 {
+            color: #6f42c1;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .architecture-diagram pre {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 1.5rem;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 4rem;
+            color: white;
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .content-section {
+                padding: 2rem;
+            }
+
+            .content-section h2 {
+                font-size: 2rem;
+            }
+
+            .project-card {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="../../index.html" class="navbar-brand">Python 0 a Senior</a>
+            <div class="navbar-links">
+                <a href="../index.html" class="nav-link">🏠 Inicio</a>
+                <a href="../index.html" class="nav-link">📁 Manejo de Archivos</a>
+                <a href="../Archivos/index.html" class="nav-link">📄 Archivos de Texto</a>
+                <a href="../Validacion/index.html" class="nav-link">✅ Validación</a>
+                <a href="index.html" class="nav-link active">🏢 Proyecto Final</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="header">
+            <h1>🏢 Proyecto Final</h1>
+            <p>Sistema de Gestión Inteligente para Bibliotecas Locales</p>
+        </div>
+
+        <!-- Desafío de la Clase: Sección motivacional antes de los ejercicios -->
+        <div class="challenge-intro-card" style="margin-bottom: 2.5rem; background: #fff; color: #232946; border-radius: 1.2rem; box-shadow: 0 4px 24px rgba(80,80,120,0.10); padding: 2.2rem 2rem 1.5rem 2rem; text-align: center;">
+            <h2 style="font-size: 2rem; font-weight: 700; margin-bottom: 0.7rem; color: #3a3a5a;">🎯 Desafío del Proyecto</h2>
+            <p style="font-size: 1.15rem; margin-bottom: 0.7rem;">Completa este proyecto para dominar el manejo de archivos, persistencia de datos y programación orientada a objetos en Python. Este proyecto te ayudará a entender mejor cómo crear sistemas completos y usar archivos efectivamente.</p>
+            <div style="font-size: 1.1rem; margin-top: 1.2rem; background: #f3f6fa; color: #232946; border-radius: 0.7rem; padding: 0.8rem 1rem; display: inline-block;">
+                🐙 <b>Recuerda:</b> Sube todos tus ejercicios a <b>GitHub</b> para seguir practicando el uso de esta herramienta y llevar un registro de tu progreso.
+            </div>
+        </div>
+
+        <!-- Contexto del Proyecto -->
+        <div class="content-section">
+            <h2>🎯 Enunciado General</h2>
+            
+            <h3>Contexto Industrial</h3>
+            <p>Las pequeñas bibliotecas comunitarias o escolares a menudo no cuentan con sistemas modernos de gestión. Muchas aún registran préstamos y devoluciones en cuadernos físicos o archivos digitales desorganizados. Este atraso genera pérdida de información, errores humanos y procesos lentos.</p>
+            
+            <p>Ante esta problemática, una red de bibliotecas locales ha solicitado el diseño de un sistema digital de escritorio que permita registrar libros, gestionar préstamos y automatizar la organización de datos almacenados en archivos .txt, optimizando la entrada y salida de información.</p>
+            
+            <p>Tu equipo ha sido contratado como desarrollador para entregar un sistema funcional y eficiente que pueda operar sin internet y sin bases de datos, usando únicamente almacenamiento en archivos planos.</p>
+
+            <h3>🎯 Objetivo del Proyecto</h3>
+            <p>Diseñar e implementar un sistema de gestión de biblioteca utilizando programación orientada a objetos (POO) bajo el patrón de arquitectura MVC (Modelo-Vista-Controlador), con persistencia de datos en archivos .txt. El sistema debe integrar un módulo básico de inteligencia artificial para optimizar la carga y escritura de datos, reduciendo redundancias y mejorando el tiempo de acceso a la información.</p>
+        </div>
+
+        <!-- Requisitos Funcionales -->
+        <div class="content-section">
+            <h2>🔍 Requisitos Funcionales</h2>
+            
+            <div class="project-card">
+                <span class="requirement-badge requirement-functional">Funcional</span>
+                <h3>Gestión de Libros</h3>
+                <ul>
+                    <li>Agregar, editar y eliminar libros</li>
+                    <li>Consultar libros por título, autor o código</li>
+                    <li>Listar todos los libros disponibles</li>
+                </ul>
+            </div>
+
+            <div class="project-card">
+                <span class="requirement-badge requirement-functional">Funcional</span>
+                <h3>Gestión de Usuarios</h3>
+                <ul>
+                    <li>Registrar nuevos usuarios de la biblioteca</li>
+                    <li>Consultar y listar usuarios registrados</li>
+                </ul>
+            </div>
+
+            <div class="project-card">
+                <span class="requirement-badge requirement-functional">Funcional</span>
+                <h3>Préstamos y Devoluciones</h3>
+                <ul>
+                    <li>Registrar un préstamo (usuario, libro, fecha)</li>
+                    <li>Registrar una devolución</li>
+                    <li>Consultar historial de préstamos por libro o por usuario</li>
+                </ul>
+            </div>
+
+            <div class="project-card">
+                <span class="requirement-badge requirement-functional">Funcional</span>
+                <h3>Persistencia en Archivos .txt</h3>
+                <ul>
+                    <li>Toda la información debe almacenarse y cargarse desde archivos de texto separados (libros.txt, usuarios.txt, prestamos.txt)</li>
+                    <li>El sistema debe permitir reanudar la operación con los datos previamente guardados</li>
+                </ul>
+            </div>
+
+            
+        </div>
+
+        <!-- Requisitos Técnicos -->
+        <div class="content-section">
+            <h2>🧱 Requisitos Técnicos</h2>
+            
+            <div class="project-card">
+                <span class="requirement-badge requirement-technical">Técnico</span>
+                <h3>Lenguaje y Patrones</h3>
+                <ul>
+                    <li><strong>Lenguaje:</strong> Python</li>
+                    <li><strong>Patrón:</strong> MVC claramente estructurado en carpetas</li>
+                    <li><strong>POO:</strong> Debe haber al menos 4 clases (Libro, Usuario, Prestamo, GestorIO)</li>
+                </ul>
+            </div>
+
+            <div class="project-card">
+                <span class="requirement-badge requirement-technical">Técnico</span>
+                <h3>Manejo de Archivos</h3>
+                <ul>
+                    <li>Uso obligatorio de manejo de archivos con métodos open, read, write, close</li>
+                    <li>Documentación clara en el código y un README explicando la ejecución</li>
+                </ul>
+            </div>
+
+           
+
+        <!-- Entregables -->
+        <div class="deliverable-section">
+            <h3>📦 Entregables</h3>
+            
+            <div class="project-card">
+                <h3>Repositorio Completo</h3>
+                <ul>
+                    <li>Repositorio con el código completo (estructura ordenada en carpetas)</li>
+                    <li>Archivos .txt usados para la persistencia</li>
+                </ul>
+            </div>
+
+            <div class="project-card">
+                <h3>Documentación</h3>
+                <ul>
+                    <li>Documento PDF (1-2 páginas) explicando:</li>
+                    <li style="margin-left: 2rem;">• La estructura del sistema</li>
+                    <li style="margin-left: 2rem;">• Cómo se aplicó la IA para mejorar operaciones de archivo</li>
+                    <li style="margin-left: 2rem;">• Capturas de pantalla de la ejecución</li>
+                </ul>
+            </div>
+
+            <div class="project-card">
+                <h3>Presentación</h3>
+                <ul>
+                    <li>Presentación oral de 5 minutos por equipo mostrando las funcionalidades</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Bonus -->
+        <div class="content-section">
+            <h2>🧠 Bonus (Opcional)</h2>
+            
+            <div class="project-card">
+                <span class="requirement-badge requirement-bonus">Bonus</span>
+                <h3>Funcionalidades Adicionales</h3>
+                <ul>
+                    <li><strong>Interfaz gráfica:</strong> Tkinter</li>
+                    <li><strong>Estadísticas:</strong> Libros más prestados, usuarios más activos</li>
+                    <li><strong>Validación de errores:</strong> Archivos corruptos, datos faltantes</li>
+                    <li><strong>Backups automáticos:</strong> Cada cierto número de operaciones</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Ejemplo de Implementación -->
+        <div class="content-section">
+            <h2>💡 Ejemplo de Implementación</h2>
+            
+            <h3>Clase Libro (Modelo)</h3>
+            <div class="code-block">
+<span class="code-keyword">class</span> Libro:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">def</span> __init__(<span class="code-keyword">self</span>, codigo, titulo, autor, stock):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.codigo = codigo<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.titulo = titulo<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.autor = autor<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.stock = stock<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.frecuencia_acceso = <span class="code-number">0</span><br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">def</span> to_string(<span class="code-keyword">self</span>):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span> <span class="code-string">f"{self.codigo}|{self.titulo}|{self.autor}|{self.stock}|{self.frecuencia_acceso}"</span><br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;@<span class="code-keyword">classmethod</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">def</span> from_string(cls, linea):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;datos = linea.strip().split(<span class="code-string">'|'</span>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span> cls(datos[<span class="code-number">0</span>], datos[<span class="code-number">1</span>], datos[<span class="code-number">2</span>], int(datos[<span class="code-number">3</span>]))<br>
+            </div>
+
+           
+
+       
+        <div class="content-section">
+            <h2>🎉 ¡Éxito en tu Proyecto!</h2>
+            <p>Este proyecto integra todos los conceptos aprendidos en el módulo: manejo de archivos, persistencia de datos, validación, programación orientada a objetos y la aplicación práctica de inteligencia artificial para optimizar operaciones de entrada/salida.</p>
+            
+            <p><strong>Recuerda:</strong> La clave del éxito está en la planificación, la implementación incremental y las pruebas constantes. ¡Comienza con una estructura sólida y construye paso a paso!</p>
+        </div>
+    </div>
+
+</body>
+
+</html> 
